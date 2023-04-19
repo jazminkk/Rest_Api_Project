@@ -67,7 +67,7 @@ def run_migrations_offline():
     context.configure(
         url=url,
         target_metadata=get_metadata(),
-        compare_type=True,
+        compare_types=True,
         literal_binds=True
     )
 

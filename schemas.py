@@ -53,3 +53,5 @@ class UserSchema(Schema):
     # When checking hash value in test, you can use ) to replace , load_only=True)
 
 
+class UserRegisterSchema(UserSchema):
+    email = fields.Str(required=True)

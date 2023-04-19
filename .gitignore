@@ -6,3 +6,4 @@ instance/data.db
 *.ini
 *.mako
 venv/
+.env

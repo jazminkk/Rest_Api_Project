@@ -1,0 +1,8 @@
+*.flaskenv
+*.idea/
+__pycache__/
+instance/data.db
+.DS_Store
+*.ini
+*.mako
+venv/

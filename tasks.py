@@ -1,12 +1,18 @@
 import os
 import requests
+import jinja2
 from dotenv import load_dotenv
 
 load_dotenv()
 
 DOMAIN = os.getenv("MAILGUN_DOMAIN")
+template_loader = jinja2.FileSystemLoader("templates")
+template_env = jinja2.Environment(loader=template_loader)
 
-def send_simple_message(to, subject, body):
+
+def render_template(template_filename, **context):
+    return template_env.get_template(template_filename).render(**context)
+def send_simple_message(to, subject, body, html):
     domain = os.getenv("MAILGUN_DOMAIN")
     return requests.post(
         f"https://api.mailgun.net/v3/{domain}/messages",
@@ -14,7 +20,8 @@ def send_simple_message(to, subject, body):
         data={"from": f"Sandy Chen <mailgun@{domain}>",
               "to": [to],
               "subject": subject,
-              "text": body}, verify=False)
+              "text": body,
+              "html": html}, verify=False)
 
 
 def send_user_registration_email(email, username):
@@ -22,4 +29,5 @@ def send_user_registration_email(email, username):
         email,
         "Successfully signed up",
         f"Hi {username}! You have successfully signed up to the Stores REST API.",
+        render_template("email/registration.html", username=username),
     )
